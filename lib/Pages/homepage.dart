@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:artspire/models/searcbar.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class Homepage extends StatelessWidget {
@@ -9,6 +10,7 @@ class Homepage extends StatelessWidget {
     return Scaffold(
       backgroundColor: const Color(0xFF21212e),
       body: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Container(
             margin: EdgeInsets.only(top: 60, left: 40),
@@ -18,7 +20,7 @@ class Homepage extends StatelessWidget {
                 Text(
                   "For the love of",
                   style: GoogleFonts.poppins(
-                    fontSize: 62,
+                    fontSize: 42,
                     fontWeight: FontWeight.w700,
                     letterSpacing: -1,
                     height: 1.2,
@@ -28,7 +30,7 @@ class Homepage extends StatelessWidget {
                 Text(
                   "human creativity",
                   style: GoogleFonts.poppins(
-                    fontSize: 62,
+                    fontSize: 42,
                     fontWeight: FontWeight.w700,
                     letterSpacing: -1,
                     height: 1.2,
@@ -37,7 +39,8 @@ class Homepage extends StatelessWidget {
                 ),
               ],
             ),
-          ),
+          ), //Header
+          Searchbar(),
         ],
       ) //Body 
     );
