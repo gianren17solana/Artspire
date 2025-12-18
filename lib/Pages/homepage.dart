@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:artspire/models/searcbar.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:artspire/models/searcbar.dart';
+import 'package:artspire/models/popular_section.dart';
 
 class Homepage extends StatelessWidget {
   const Homepage({super.key});
@@ -14,6 +15,7 @@ class Homepage extends StatelessWidget {
         children: [
           TextHeader(),
           Searchbar(),
+          PopularSection(),
         ],
       ),
     );
@@ -26,14 +28,14 @@ class TextHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.only(top: 60, left: 40),
+      margin: EdgeInsets.only(top: 60, left: 30),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
             "For the love of",
             style: GoogleFonts.poppins(
-              fontSize: 42,
+              fontSize: 35,
               fontWeight: FontWeight.w700,
               letterSpacing: -1,
               height: 1.2,
@@ -43,7 +45,7 @@ class TextHeader extends StatelessWidget {
           Text(
             "human creativity",
             style: GoogleFonts.poppins(
-              fontSize: 42,
+              fontSize: 35,
               fontWeight: FontWeight.w700,
               letterSpacing: -1,
               height: 1.2,
