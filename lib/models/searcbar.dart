@@ -8,32 +8,32 @@ class Searchbar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.only(top: 30, right: 25, left: 25),
+      margin: EdgeInsets.only(top: 25, right: 20, left: 20),
       child: SearchBar(
         leading: SvgPicture.asset(
           "assets/icons/Search.svg",
-          height: 32,
-          width: 32,
+          height: 22,
+          width: 22,
         ), 
         hintText: "Search", 
         hintStyle: MaterialStateProperty.all(
           GoogleFonts.poppins(
-            fontSize: 22,
-            fontWeight: FontWeight.w300,
+            fontSize: 18,
+            fontWeight: FontWeight.w400,
             color: const Color(0xFFC5C2D2),
           ),
         ),
         textStyle: MaterialStateProperty.all(
           GoogleFonts.poppins(
-            fontSize: 22,
-            fontWeight: FontWeight.w300,
+            fontSize: 18,
+            fontWeight: FontWeight.w400,
             color: Colors.white,
           ),
         ),
         backgroundColor: WidgetStateProperty.all(const Color(0xFF383843)),
         elevation: WidgetStateProperty.all(0),
         padding: WidgetStatePropertyAll(
-      EdgeInsets.symmetric(vertical: 10, horizontal: 33))
+      EdgeInsets.symmetric(vertical: 5, horizontal: 20))
       ),
     );
   }
