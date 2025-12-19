@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:artspire/models/searcbar.dart';
 import 'package:artspire/models/popular_section.dart';
+import 'package:artspire/models/service_section.dart';
 
 class Homepage extends StatelessWidget {
   const Homepage({super.key});
@@ -16,6 +17,7 @@ class Homepage extends StatelessWidget {
           TextHeader(),
           Searchbar(),
           PopularSection(),
+          ServiceSection(),
         ],
       ),
     );
