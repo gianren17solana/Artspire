@@ -4,6 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:artspire/models/searcbar.dart';
 import 'package:artspire/models/popular_section.dart';
 import 'package:artspire/models/service_section.dart';
+import 'package:artspire/models/navbar.dart';
 
 class Homepage extends StatelessWidget {
   const Homepage({super.key});
@@ -30,54 +31,7 @@ class Homepage extends StatelessWidget {
             )
           )
         ),
-        child: NavigationBar(
-          destinations: [
-            NavigationDestination(
-              icon: SvgPicture.asset(
-                "assets/icons/Home_Highlight.svg",
-                height: 55,
-                width: 55,
-              ), 
-              label: "uwu",
-            ),
-            NavigationDestination(
-              icon: SvgPicture.asset(
-                "assets/icons/Compass.svg",
-                height: 25,
-                width: 25,
-              ), 
-              label: "uwu",
-            ),
-            NavigationDestination(
-              icon: SvgPicture.asset(
-                "assets/icons/Add.svg",
-                height: 50,
-                width: 50,
-              ), 
-              label: "uwu",
-            ),
-            NavigationDestination(
-              icon: SvgPicture.asset(
-                "assets/icons/Bell.svg",
-                height: 25,
-                width: 25,
-              ), 
-              label: "uwu",
-            ),
-            NavigationDestination(
-              icon: SvgPicture.asset(
-                "assets/icons/User.svg",
-                height: 25,
-                width: 25,
-              ), 
-              label: "uwu",
-            ),
-          ],
-          labelBehavior: NavigationDestinationLabelBehavior.alwaysHide,
-          backgroundColor: const Color(0xFF21212e),
-          indicatorColor: Colors.transparent,
-          height: 70,
-        )
+        child: NavBar(),
       ),
     );
   }
