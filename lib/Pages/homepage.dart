@@ -22,17 +22,7 @@ class Homepage extends StatelessWidget {
           ServiceSection(),
         ],
       ),
-      bottomNavigationBar: Container(
-        decoration: const BoxDecoration(
-          border: Border(
-            top: BorderSide(
-              color: Color(0xFF383843),
-              width: 2,
-            )
-          )
-        ),
-        child: NavBar(),
-      ),
+      bottomNavigationBar: NavBar(), 
     );
   }
 }
