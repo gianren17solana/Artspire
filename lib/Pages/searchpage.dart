@@ -58,24 +58,41 @@ class CategoryTabs extends StatelessWidget {
 
   //mock data - delete later
   static const List<String> categoryTabs = ["All", "Recommendation", "Popular", "Hot Offer", "Rating"];
+  static const int selectedIndex = 0;
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.only(top: 20, left: 25, right: 25),
-      height: 35,
+      margin: EdgeInsets.only(top: 20, left: 25, right: 25, bottom: 10),
+      height: 22,
       child: ListView.separated(
         scrollDirection: Axis.horizontal,
         itemCount: categoryTabs.length, 
         itemBuilder: (BuildContext context, int index) {
-          return Text(
-            categoryTabs[index],
-            style: GoogleFonts.poppins(
-              fontSize: 13,
-              fontWeight: FontWeight.normal,
-              color: const Color(0xFFC5C2D2),
-            ),
-          );
+          return index == selectedIndex ? 
+            Container(
+              padding: EdgeInsets.symmetric(horizontal: 12),
+              decoration: BoxDecoration(
+                color: const Color(0xFF7A88F2),
+                borderRadius: BorderRadius.circular(6),
+              ),
+              child: Text(
+                categoryTabs[index],
+                style: GoogleFonts.poppins(
+                  fontSize: 14,
+                  fontWeight: FontWeight.w500,
+                  color: Colors.white, 
+                ),
+              )
+            ) :
+            Text(
+              categoryTabs[index],
+              style: GoogleFonts.poppins(
+                fontSize: 13,
+                fontWeight: FontWeight.normal,
+                color: const Color(0xFFC5C2D2), 
+              ),
+            ); 
         }, 
         separatorBuilder: (context, index) {
           return const SizedBox(width: 18);
