@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -31,6 +33,10 @@ class SearchCard extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Container(
+            margin: EdgeInsets.only(bottom: 10),
+            height: 165,
+            width: double.infinity,
+            padding: EdgeInsets.all(10),
             decoration: BoxDecoration(
               color: Colors.white,
               borderRadius: BorderRadius.circular(6),
@@ -39,8 +45,49 @@ class SearchCard extends StatelessWidget {
                 fit: BoxFit.cover
               ), 
             ),
-            margin: EdgeInsets.only(bottom: 10),
-            height: 165,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Container(
+                  padding: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                  decoration: BoxDecoration(
+                    color: const Color(0xFFFF5959),
+                    borderRadius: BorderRadius.circular(5),
+                  ),
+                  child: Text(
+                    "New Offer",
+                    style: GoogleFonts.poppins(
+                      fontSize: 12,
+                      fontWeight: FontWeight.normal,
+                      letterSpacing: 1.2,
+                      color: Colors.white,
+                    ),
+                  ),
+                ),
+                ClipRect(
+                  child: BackdropFilter( //controls blur effect to container's boundary
+                    filter: ImageFilter.blur(sigmaX: 5.0, sigmaY: 5.0),
+                    child: Container(
+                      padding: EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                      decoration: BoxDecoration(
+                        color: Colors.black.withOpacity(0.5), 
+                        borderRadius: BorderRadius.circular(5),
+                      ),
+                      child: Text(
+                        "梅原生（せい）",
+                        style: GoogleFonts.poppins(
+                          fontSize: 12,
+                          fontWeight: FontWeight.normal,
+                          letterSpacing: 1.2,
+                          color: Colors.white,
+                        ),
+                      ),
+                    ),
+                  ),
+                ), 
+              ],
+            ),
           ), //Image Header
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
