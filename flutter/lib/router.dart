@@ -1,9 +1,9 @@
-import 'package:artspire/Pages/addpage.dart';
-import 'package:artspire/Pages/messagespage.dart';
-import 'package:artspire/Pages/profilepage.dart';
-import 'package:artspire/Pages/shellpage.dart';
-import 'package:artspire/Pages/homepage.dart';
-import 'package:artspire/Pages/searchpage.dart';
+import 'package:artspire/screens/addpage.dart';
+import 'package:artspire/screens/messagespage.dart';
+import 'package:artspire/screens/profilepage.dart';
+import 'package:artspire/screens/shellpage.dart';
+import 'package:artspire/screens/homepage.dart';
+import 'package:artspire/screens/searchpage.dart';
 import 'package:go_router/go_router.dart';
 
 final router = GoRouter(

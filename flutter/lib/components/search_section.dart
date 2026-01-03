@@ -1,4 +1,4 @@
-import 'package:artspire/cards/search_card.dart';
+import 'package:artspire/widgets/search_card.dart';
 import 'package:flutter/material.dart';
 
 class SearchSection extends StatelessWidget {

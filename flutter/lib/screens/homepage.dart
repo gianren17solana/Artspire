@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:artspire/models/searcbar.dart';
-import 'package:artspire/models/popular_section.dart';
-import 'package:artspire/models/service_section.dart';
+import 'package:artspire/widgets/searcbar.dart';
+import 'package:artspire/components/popular_section.dart';
+import 'package:artspire/components/service_section.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class HomePage extends StatelessWidget {

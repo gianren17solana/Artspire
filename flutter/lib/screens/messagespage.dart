@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:artspire/models/searcbar.dart';
+import 'package:artspire/widgets/searcbar.dart';
 
 class MessagesPage extends StatelessWidget {
   const MessagesPage({super.key});

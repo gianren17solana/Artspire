@@ -1,5 +1,5 @@
-import 'package:artspire/models/searcbar.dart';
-import 'package:artspire/models/search_section.dart';
+import 'package:artspire/widgets/searcbar.dart';
+import 'package:artspire/components/search_section.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 

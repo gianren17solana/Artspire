@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:artspire/models/navbar.dart';
+import 'package:artspire/widgets/navbar.dart';
 
 class ShellPage extends StatelessWidget {
   const ShellPage({super.key, required this.child});

@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:artspire/cards/pop_card.dart';
+import 'package:artspire/widgets/service_card.dart';
 
-class PopularSection extends StatelessWidget {
-  const PopularSection({super.key});
+class ServiceSection extends StatelessWidget {
+  const ServiceSection({super.key});
 
   //mock data declaration for layout testing
-  static const List<String> tags = ["Illustration", "Manga", "3D Model"];
+  static const List<String> tags = ["Live2D Model", "Special Portraits", "Headshots"];
   static const List<String> price = ["₱3,000", "₱2,000", "₱5,000"];
-  static const List<String> pImgPath = ["assets/img/n.png", "assets/img/manga.png", "assets/img/l3d.png"];
+  static const List<String> pImgPath = ["assets/img/l2d.png", "assets/img/portrait.png", "assets/img/head.png"];
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +20,7 @@ class PopularSection extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                "Popular Tags",
+                "Services",
                 style: GoogleFonts.poppins(
                   fontSize: 18,
                   fontWeight: FontWeight.w500,
@@ -40,16 +40,16 @@ class PopularSection extends StatelessWidget {
                 ),
               ),
             ], 
-          ), //Popular Heading
+          ), //Services Heading
           Container(
             margin: EdgeInsets.only(top: 15),
-            height: 160,
+            height: 250,
             child: ListView.separated(
               scrollDirection: Axis.horizontal,
               itemCount: tags.length, 
               itemBuilder: (BuildContext context, int index) {
-                return PopCard(
-                  imgPath: pImgPath[index],
+                return ServiceCard(
+                  imgPath: pImgPath[index], 
                   tagName: tags[index],
                   price: price[index]
                 );
