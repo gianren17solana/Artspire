@@ -51,7 +51,7 @@ class ChatType extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.only(top: 20, left: 30),
+      margin: const EdgeInsets.only(top: 20, left: 25, bottom: 12),
       child: Row(
         children: List.generate(msgcategs.length, (index) {
           final isSelected = index == selectedcateg;
@@ -114,13 +114,13 @@ class ChatTree extends StatelessWidget {
   Widget build(BuildContext context) {
     return Expanded(
       child: ListView.builder(
-        padding: const EdgeInsets.only(top: 12, left: 36),
         itemCount: chats.length,
         itemBuilder: (context, index) {
           final chat = chats[index];
 
           return Container(
-            margin: EdgeInsets.all(12),
+            margin: EdgeInsets.symmetric(horizontal: 20),
+            padding: EdgeInsets.all(12),
 
             child: Row(
               children: [
@@ -129,7 +129,7 @@ class ChatTree extends StatelessWidget {
                   backgroundImage: AssetImage(chat["image"]!),
                 ),
 
-                const SizedBox(width: 20),
+                const SizedBox(width: 32),
 
                 Expanded(
                   child: Column(
@@ -162,12 +162,8 @@ class ChatTree extends StatelessWidget {
                   'assets/icons/menuchat.svg',
                   width: 45,
                   height: 45,
-                  colorFilter: const ColorFilter.mode(
-                    Color(0XFF383843),
-                    BlendMode.srcIn,
-                  ),
                 ),
-                const SizedBox(width: 25),
+                Padding(padding: const EdgeInsets.symmetric(horizontal: 20)),
               ],
             ),
           );
