@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:artspire/widgets/searcbar.dart';
+import 'package:flutter_svg/svg.dart';
 
 class MessagesPage extends StatelessWidget {
   const MessagesPage({super.key});
@@ -31,10 +32,7 @@ class MessageHeader extends StatelessWidget {
             "Messages",
             style: GoogleFonts.poppins(fontSize: 28, color: Colors.white),
           ),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 14),
-            child: Searchbar(),
-          ),
+          Searchbar(),
         ],
       ),
     );
@@ -50,7 +48,7 @@ class ChatType extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.only(top: 20, left: 25, right: 25),
+      margin: const EdgeInsets.only(top: 20, left: 25, bottom: 12),
       child: Row(
         children: List.generate(msgcategs.length, (index) {
           final isSelected = index == selectedcateg;
@@ -86,8 +84,87 @@ class ChatType extends StatelessWidget {
 class ChatTree extends StatelessWidget {
   const ChatTree({super.key});
 
+  static const List<Map<String, String>> chats = [
+    {
+      "name": "梅原生（せい）",
+      "message": "Hii, thank you so much!🩵 Enjoy your holiday <<<<<))))",
+      "image": "assets/img/Chatpf.png",
+    },
+    {
+      "name": "梅原生（せい）",
+      "message": "Hii, thank you so much!🩵 Enjoy your holiday <<<<<))))",
+      "image": "assets/img/Chatpf.png",
+    },
+    {
+      "name": "梅原生（せい）",
+      "message": "Hii, thank you so much!🩵 Enjoy your holiday <<<<<))))",
+      "image": "assets/img/Chatpf.png",
+    },
+    {
+      "name": "梅原生（せい）",
+      "message": "Hii, thank you so much!🩵 Enjoy your holiday <<<<<))))",
+      "image": "assets/img/Chatpf.png",
+    },
+  ];
+
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return Expanded(
+      child: ListView.builder(
+        itemCount: chats.length,
+        itemBuilder: (context, index) {
+          final chat = chats[index];
+
+          return Container(
+            margin: EdgeInsets.symmetric(horizontal: 20),
+            padding: EdgeInsets.all(12),
+
+            child: Row(
+              children: [
+                CircleAvatar(
+                  radius: 28,
+                  backgroundImage: AssetImage(chat["image"]!),
+                ),
+
+                const SizedBox(width: 32),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        chat["name"]!,
+                        style: GoogleFonts.poppins(
+                          fontSize: 14,
+                          fontWeight: FontWeight.w500,
+                          color: Colors.white,
+                        ),
+                      ),
+                      const SizedBox(height: 12),
+
+                      Text(
+                        chat["message"]!,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: GoogleFonts.poppins(
+                          fontSize: 12,
+                          fontWeight: FontWeight.w500,
+                          color: const Color(0xFFC5C2D2),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                Padding(padding: const EdgeInsets.symmetric(horizontal: 20)),
+                SvgPicture.asset(
+                  'assets/icons/menuchat.svg',
+                  width: 45,
+                  height: 45,
+                ),
+              ],
+            ),
+          );
+        },
+      ),
+    );
   }
 }
