@@ -14,7 +14,9 @@ class HomePage extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           TextHeader(),
-          Searchbar(),
+          Searchbar(
+            hintMsg: "Search"
+          ),
           PopularSection(),
           ServiceSection(),
         ],

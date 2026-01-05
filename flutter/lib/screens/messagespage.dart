@@ -151,7 +151,9 @@ class MessageHeader extends StatelessWidget {
               color: Colors.white
             ),
           ),
-          Searchbar(),
+          Searchbar(
+            hintMsg: "Search direct messages",
+          ),
         ],
       ),
     );
@@ -216,8 +218,8 @@ class ChatTree extends StatelessWidget {
                 Padding(padding: const EdgeInsets.symmetric(horizontal: 12)),
                 SvgPicture.asset(
                   'assets/icons/menuchat.svg',
-                  width: 45,
-                  height: 45,
+                  width: 35,
+                  height: 35,
                 ),
               ],
             ),

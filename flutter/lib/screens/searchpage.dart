@@ -61,7 +61,9 @@ class _SearchPageState extends State<SearchPage> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         PageHeader(),
-        Searchbar(),
+        Searchbar(
+          hintMsg: "Search"
+        ),
         CategoryTab(
           selectedIndex: selectedIndex,
           onSelected: _updateCategory,
