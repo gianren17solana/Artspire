@@ -13,7 +13,14 @@ class ProfilePage extends StatelessWidget {
         children: const [
           ProfileHeader(),
           UserProfile(),
-          UserDescription(),
+          UserDescription(
+            name: "梅原生（せい）",
+            description:
+                "My name is Sei.               "
+                "                                                                   Thank you for your comments and likes!                                                    "
+                "                                                                         ※ AI-related uses are prohibited!"
+                "                                                                                             ※ Using my images with AI-related content is prohibited",
+          ),
           ArtType(),
           Expanded(child: ArtContainer()),
         ],
@@ -135,18 +142,26 @@ class _InfoBlock extends StatelessWidget {
 }
 
 class UserDescription extends StatelessWidget {
-  const UserDescription({super.key});
+  final String name;
+  final String description;
+
+  const UserDescription({
+    super.key,
+    required this.name,
+    required this.description,
+  });
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.symmetric(horizontal: 20),
+      margin: const EdgeInsets.symmetric(horizontal: 20),
+      padding: const EdgeInsets.only(top: 8),
 
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            "梅原生（せい）",
+            name,
             style: GoogleFonts.poppins(
               fontSize: 22,
               fontWeight: FontWeight.w500,
@@ -157,41 +172,8 @@ class UserDescription extends StatelessWidget {
           const SizedBox(height: 12),
 
           Text(
-            "My Name is Sei. ",
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
-            style: GoogleFonts.poppins(
-              fontSize: 14,
-              height: 1.4,
-              color: const Color(0xFFC5C2D2),
-            ),
-          ),
-          const SizedBox(height: 5),
-          Text(
-            "Thank you for your comments and likes!",
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
-            style: GoogleFonts.poppins(
-              fontSize: 14,
-              height: 1.4,
-              color: const Color(0xFFC5C2D2),
-            ),
-          ),
-          const SizedBox(height: 22),
-          Text(
-            "※ AI-related uses are prohibited!",
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
-            style: GoogleFonts.poppins(
-              fontSize: 14,
-              height: 1.4,
-              color: const Color(0xFFC5C2D2),
-            ),
-          ),
-          const SizedBox(height: 5),
-          Text(
-            "※ Using my images with AI-related content is prohibited.",
-            maxLines: 1,
+            description,
+            maxLines: 4,
             overflow: TextOverflow.ellipsis,
             style: GoogleFonts.poppins(
               fontSize: 14,
