@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:go_router/go_router.dart';
 
 class ProfilePage extends StatelessWidget {
   const ProfilePage({super.key});
@@ -16,10 +17,10 @@ class ProfilePage extends StatelessWidget {
           UserDescription(
             name: "梅原生（せい）",
             description:
-                "My name is Sei.               "
-                "                                                                   Thank you for your comments and likes!                                                    "
-                "                                                                         ※ AI-related uses are prohibited!"
-                "                                                                                             ※ Using my images with AI-related content is prohibited",
+                "My name is Sei.\n"
+                "Thank you for your comments and likes!\n"
+                "※ AI-related uses are prohibited!\n"
+                "※ Using my images with AI-related content is prohibited\n",
           ),
           ArtType(),
           Expanded(child: ArtContainer()),
@@ -53,13 +54,12 @@ class UserProfile extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 20),
-      padding: const EdgeInsets.all(16),
 
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           CircleAvatar(
-            radius: 55,
+            radius: 50,
             backgroundImage: AssetImage("assets/img/Chatpf.png"),
           ),
           const SizedBox(width: 18),
@@ -78,24 +78,27 @@ class UserProfile extends StatelessWidget {
                     _InfoBlock(value: '₱3,055', title: 'Average price'),
                   ],
                 ),
-                const SizedBox(height: 10),
 
-                Container(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 20,
-                    vertical: 10,
-                  ),
-                  decoration: BoxDecoration(
-                    color: const Color(0xFF7A88F2),
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                  child: Center(
-                    child: Text(
-                      "Edit Profile",
-                      style: GoogleFonts.poppins(
-                        fontSize: 16,
-                        fontWeight: FontWeight.w500,
-                        color: Colors.white,
+                const SizedBox(height: 8),
+                GestureDetector(
+                  onTap: () => context.push('/profile/editprofile'),
+                  child: Container(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 20,
+                      vertical: 5,
+                    ),
+                    decoration: BoxDecoration(
+                      color: const Color(0xFF7A88F2),
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                    child: Center(
+                      child: Text(
+                        "Edit Profile",
+                        style: GoogleFonts.poppins(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w500,
+                          color: Colors.white,
+                        ),
                       ),
                     ),
                   ),
@@ -128,7 +131,7 @@ class _InfoBlock extends StatelessWidget {
             color: const Color(0xFF7A88F2),
           ),
         ),
-        const SizedBox(height: 6),
+        const SizedBox(height: 2),
         Text(
           title,
           style: GoogleFonts.poppins(

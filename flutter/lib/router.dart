@@ -1,13 +1,16 @@
 import 'package:artspire/screens/addpage.dart';
+import 'package:artspire/screens/artworks.dart';
 import 'package:artspire/screens/messagespage.dart';
 import 'package:artspire/screens/profilepage.dart';
+import 'package:artspire/screens/settings.dart';
 import 'package:artspire/screens/shellpage.dart';
 import 'package:artspire/screens/homepage.dart';
 import 'package:artspire/screens/searchpage.dart';
 import 'package:artspire/screens/searchpage_card.dart';
-import 'package:artspire/widgets/accountpage.dart';
+import 'package:artspire/screens/accountpage.dart';
 import 'package:artspire/screens/confirmation_page.dart';
 import 'package:go_router/go_router.dart';
+import 'package:artspire/screens/personalinformation.dart';
 
 final router = GoRouter(
   initialLocation: '/home',
@@ -28,10 +31,8 @@ final router = GoRouter(
               path: ':id',
               pageBuilder: (context, state) {
                 final id = int.parse(state.pathParameters['id']!);
-                return NoTransitionPage(
-                  child: SearchCardDetails(id: id)
-                );
-              }
+                return NoTransitionPage(child: SearchCardDetails(id: id));
+              },
             ),
           ],
         ),
@@ -44,6 +45,34 @@ final router = GoRouter(
           path: '/profile',
           pageBuilder: (context, state) =>
               NoTransitionPage(child: ProfilePage()),
+          routes: [
+            GoRoute(
+              path: 'editprofile',
+              pageBuilder: (context, state) {
+                return NoTransitionPage(child: AccountPage());
+              },
+              routes: [
+                GoRoute(
+                  path: 'personalinformation',
+                  pageBuilder: (context, state) {
+                    return NoTransitionPage(child: Personalinformation());
+                  },
+                ),
+                GoRoute(
+                  path: 'artworks',
+                  pageBuilder: (context, state) {
+                    return NoTransitionPage(child: Artworks());
+                  },
+                ),
+                GoRoute(
+                  path: 'settings',
+                  pageBuilder: (context, state) {
+                    return NoTransitionPage(child: Settings());
+                  },
+                ),
+              ],
+            ),
+          ],
         ),
         GoRoute(
           path: '/add',
@@ -55,12 +84,10 @@ final router = GoRouter(
     //buying confirmation
     GoRoute(
       path: '/search/:id/details',
-      pageBuilder: (context, state) { 
+      pageBuilder: (context, state) {
         final id = int.parse(state.pathParameters['id']!);
-        return NoTransitionPage(
-          child: PurchaseConfirmation(id: id)
-        );
-      }
-    )
+        return NoTransitionPage(child: PurchaseConfirmation(id: id));
+      },
+    ),
   ],
 );

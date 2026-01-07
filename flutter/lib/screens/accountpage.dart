@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:go_router/go_router.dart';
 
 class AccountPage extends StatelessWidget {
   const AccountPage({super.key});
@@ -13,12 +14,11 @@ class AccountPage extends StatelessWidget {
         backgroundColor: const Color(0xFF21212E),
         elevation: 0,
         leadingWidth: 72,
-        leading: Padding(
-          padding: const EdgeInsets.only(left: 20),
-          child: GestureDetector(
-            onTap: () => Navigator.pop(context),
-            child: SvgPicture.asset('assets/icons/path.svg'),
-          ),
+        leading: IconButton(
+          icon: SvgPicture.asset('assets/icons/path.svg'),
+          onPressed: () {
+            Navigator.of(context).maybePop();
+          },
         ),
         centerTitle: true,
         title: Text(
@@ -33,27 +33,44 @@ class AccountPage extends StatelessWidget {
 
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
-        children: const [
-          SizedBox(height: 34),
+        children: [
+          const SizedBox(height: 34),
           ProfileEdit(name: "梅原生（せい）", avatarPath: "assets/img/Chatpf.png"),
-          SizedBox(height: 48),
+          const SizedBox(height: 34),
 
-          ProfileMenus(
-            iconPath: 'assets/icons/PersonInfo.svg',
-            title: 'Personal Information',
-            arrow: 'assets/icons/arrowright.svg',
+          Material(
+            color: Colors.transparent,
+            child: Column(
+              children: [
+                InkWell(
+                  onTap: () =>
+                      context.push('/profile/editprofile/personalinformation'),
+                  child: const ProfileMenus(
+                    iconPath: 'assets/icons/PersonInfo.svg',
+                    title: 'Personal Information',
+                    arrow: 'assets/icons/arrowright.svg',
+                  ),
+                ),
+                InkWell(
+                  onTap: () => context.push('/profile/editprofile/artworks'),
+                  child: const ProfileMenus(
+                    iconPath: 'assets/icons/Imgicon.svg',
+                    title: "Artworks",
+                    arrow: 'assets/icons/arrowright.svg',
+                  ),
+                ),
+                InkWell(
+                  onTap: () => context.push('/profile/editprofile/settings'),
+                  child: const ProfileMenus(
+                    iconPath: 'assets/icons/settings.svg',
+                    title: 'Settings',
+                    arrow: 'assets/icons/arrowright.svg',
+                  ),
+                ),
+              ],
+            ),
           ),
-          ProfileMenus(
-            iconPath: 'assets/icons/Imgicon.svg',
-            title: "Artworks",
-            arrow: 'assets/icons/arrowright.svg',
-          ),
-          ProfileMenus(
-            iconPath: 'assets/icons/settings.svg',
-            title: 'Settings',
-            arrow: 'assets/icons/arrowright.svg',
-          ),
-          const SizedBox(height: 180),
+          Spacer(),
           LogoutAcc(),
         ],
       ),
