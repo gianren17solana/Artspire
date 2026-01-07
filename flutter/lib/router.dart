@@ -41,6 +41,14 @@ final router = GoRouter(
           path: '/profile',
           pageBuilder: (context, state) =>
               NoTransitionPage(child: ProfilePage()),
+          routes: [
+            GoRoute(
+              path: ':editprofile',
+              pageBuilder: (context, state) {
+                return NoTransitionPage(child: AccountPage());
+              },
+            ),
+          ],
         ),
         GoRoute(
           path: '/add',
