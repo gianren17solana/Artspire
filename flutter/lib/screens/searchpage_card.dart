@@ -6,75 +6,53 @@ import 'package:artspire/models/artItem.dart';
 import 'package:artspire/apiService.dart';
 
 class SearchCardDetails extends StatelessWidget {
-  final int id;
+  final ArtItem item;
 
   SearchCardDetails({
     super.key,
-    required this.id,
+    required this.item,
   });
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder<List<ArtItem>>(
-      future: ApiService.fetchItems(),
-      builder: (context, snapshot) {
-        if (snapshot.connectionState == ConnectionState.waiting) {
-          return const Center(
-            child: CircularProgressIndicator() 
-          );
-        }
-
-        if (snapshot.hasError) { return Center(
-            child: Text("Error: ${snapshot.error}")
-          );
-        }
-
-        final items = snapshot.data!;
-
-        ArtItem getItem() {
-          return items.firstWhere((e) => e.id == id);
-        }
-
-        return Scaffold(
-          backgroundColor: const Color(0xFF21212E),
-          appBar: AppBar(
-            centerTitle: true,
-            backgroundColor: Colors.transparent,
-            leading: IconButton(
-              icon: SvgPicture.asset(
-                "assets/icons/XButton.svg"
-              ),
-              onPressed: () {
-                Navigator.of(context).maybePop();
-              },
-            ) 
+    return Scaffold(
+      backgroundColor: const Color(0xFF21212E),
+      appBar: AppBar(
+        centerTitle: true,
+        backgroundColor: Colors.transparent,
+        leading: IconButton(
+          icon: SvgPicture.asset(
+            "assets/icons/XButton.svg"
           ),
-          body: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              HeaderImage(
-                item: getItem(),
-              ),
-              HeaderDetails(
-                item: getItem(),
-              ),
-              CardDescription(
-                item: getItem(),
-              ),
-              Spacer(),
-              BuySection(
-                item: getItem(),
-              ),
-            ],
+          onPressed: () {
+            Navigator.of(context).maybePop();
+          },
+        ) 
+      ),
+      body: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          HeaderImage(
+            item: item,
           ),
-        );
-      }
+          HeaderDetails(
+            item: item,
+          ),
+          CardDescription(
+            item: item,
+          ),
+          Spacer(),
+          BuySection(
+            item: item,
+          ),
+        ],
+      ),
     );
   }
 }
 
 class HeaderImage extends StatelessWidget {
-  final ArtItem? item;
+  final ArtItem item;
 
   const HeaderImage({
     super.key,
@@ -94,7 +72,7 @@ class HeaderImage extends StatelessWidget {
             borderRadius: BorderRadius.circular(10),
             image: item?.imgUrl.isNotEmpty ?? false
             ? DecorationImage(
-              image: AssetImage(item!.imgUrl),
+              image: NetworkImage(item!.imgUrl),
               fit: BoxFit.cover
             ) : null, 
           ), 
@@ -105,7 +83,7 @@ class HeaderImage extends StatelessWidget {
 }
 
 class HeaderDetails extends StatelessWidget {
-  final ArtItem? item;
+  final ArtItem item;
 
   const HeaderDetails({
     super.key,
@@ -164,7 +142,7 @@ class HeaderDetails extends StatelessWidget {
 }
 
 class CardDescription extends StatelessWidget {
-  final ArtItem? item;
+  final ArtItem item;
 
   const CardDescription ({
     super.key,
@@ -207,7 +185,7 @@ class CardDescription extends StatelessWidget {
 }
 
 class BuySection extends StatelessWidget {
-  final ArtItem? item;
+  final ArtItem item;
 
   const BuySection({
     super.key,
@@ -246,7 +224,10 @@ class BuySection extends StatelessWidget {
             ), 
           ),
           GestureDetector(
-            onTap: () => context.push("/search/${item?.id}/details"),
+            onTap: () => context.push(
+              "/search/${item?.id}/details",
+              extra: item
+            ),
             child: Container(
               padding: const EdgeInsets.symmetric(
                 horizontal: 40,
