@@ -184,7 +184,7 @@ class UserDescription extends StatelessWidget {
               color: const Color(0xFFC5C2D2),
             ),
           ),
-          const SizedBox(height: 18),
+          const SizedBox(height: 22),
         ],
       ),
     );
