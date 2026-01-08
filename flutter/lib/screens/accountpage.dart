@@ -153,30 +153,33 @@ class LogoutAcc extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
-      width: double.infinity,
-      height: 54,
-      decoration: BoxDecoration(
-        color: const Color(0xFF343552),
-        border: Border.all(color: const Color(0xFFFF3636), width: 1.5),
-        borderRadius: BorderRadius.circular(8),
-      ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          SvgPicture.asset('assets/icons/door.svg', width: 20, height: 20),
-          const SizedBox(width: 10),
+    return GestureDetector(
+      onTap: () => context,
+      child: Container(
+        margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+        width: double.infinity,
+        height: 54,
+        decoration: BoxDecoration(
+          color: const Color(0xFF343552),
+          border: Border.all(color: const Color(0xFFFF3636), width: 1.5),
+          borderRadius: BorderRadius.circular(8),
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            SvgPicture.asset('assets/icons/door.svg', width: 20, height: 20),
+            const SizedBox(width: 10),
 
-          Text(
-            'Logout Account',
-            style: GoogleFonts.poppins(
-              fontSize: 18,
-              fontWeight: FontWeight.w400,
-              color: const Color(0xFFFF3636),
+            Text(
+              'Logout Account',
+              style: GoogleFonts.poppins(
+                fontSize: 18,
+                fontWeight: FontWeight.w400,
+                color: const Color(0xFFFF3636),
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
