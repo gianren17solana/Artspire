@@ -6,15 +6,11 @@ import 'package:artspire/apiService.dart';
 import 'package:intl/intl.dart';
 
 class PurchaseConfirmation extends StatefulWidget {
-  PurchaseConfirmation({
-    super.key,
-    required this.id,
-    required this.item
-  });
+  PurchaseConfirmation({super.key, required this.id, required this.item});
 
   final int id;
   final ArtItem item;
-  
+
   @override
   State<PurchaseConfirmation> createState() => _PurchaseConfirmationState();
 }
@@ -39,13 +35,11 @@ class _PurchaseConfirmationState extends State<PurchaseConfirmation> {
         centerTitle: true,
         backgroundColor: Colors.transparent,
         leading: IconButton(
-          icon: SvgPicture.asset(
-            "assets/icons/XButton.svg"
-          ),
+          icon: SvgPicture.asset("assets/icons/XButton.svg"),
           onPressed: () {
             Navigator.of(context).maybePop();
           },
-        ) 
+        ),
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -55,9 +49,7 @@ class _PurchaseConfirmationState extends State<PurchaseConfirmation> {
               serviceName: widget.item.serviceName,
               price: _totalPrice,
             ),
-            HeaderImage(
-              imgUrl: widget.item.imgUrl,
-            ),
+            HeaderImage(imgUrl: widget.item.imgUrl),
             BuyingOptions(
               basePrice: _originalBasePrice,
               onPriceChange: (newPrice) {
@@ -67,12 +59,8 @@ class _PurchaseConfirmationState extends State<PurchaseConfirmation> {
               commercialRate: widget.item.commercialRate,
             ),
             PaymentMethods(),
-            ArtDetails(
-              item: widget.item,
-            ),
-            TermsOfService(
-              item: widget.item,
-            ),
+            ArtDetails(item: widget.item),
+            TermsOfService(item: widget.item),
             AcceptSection(
               artistName: widget.item.artistName,
               isTermsAccepted: isTermsAccepted,
@@ -96,13 +84,13 @@ class PriceDetails extends StatelessWidget {
   const PriceDetails({
     super.key,
     required this.serviceName,
-    required this.price
+    required this.price,
   });
 
   static final _formatter = NumberFormat.currency(
     locale: 'en_PH',
     symbol: '₱',
-    decimalDigits: 2
+    decimalDigits: 2,
   );
 
   @override
@@ -115,9 +103,9 @@ class PriceDetails extends StatelessWidget {
           Text(
             serviceName,
             style: GoogleFonts.poppins(
-              fontSize: 24, 
+              fontSize: 24,
               fontWeight: FontWeight.w700,
-              color: Colors.white
+              color: Colors.white,
             ),
           ),
           Row(
@@ -125,7 +113,7 @@ class PriceDetails extends StatelessWidget {
               Text(
                 "Starting from ",
                 style: GoogleFonts.poppins(
-                  fontSize: 20, 
+                  fontSize: 20,
                   fontWeight: FontWeight.w500,
                   color: const Color(0xFFC5C2D2),
                 ),
@@ -133,7 +121,7 @@ class PriceDetails extends StatelessWidget {
               Text(
                 _formatter.format(price),
                 style: GoogleFonts.poppins(
-                  fontSize: 20, 
+                  fontSize: 20,
                   fontWeight: FontWeight.w700,
                   color: const Color(0xFF7A88F2),
                 ),
@@ -149,10 +137,7 @@ class PriceDetails extends StatelessWidget {
 class HeaderImage extends StatelessWidget {
   final String imgUrl;
 
-  const HeaderImage({
-    super.key,
-    required this.imgUrl,
-  });
+  const HeaderImage({super.key, required this.imgUrl});
 
   @override
   Widget build(BuildContext context) {
@@ -166,14 +151,15 @@ class HeaderImage extends StatelessWidget {
             color: Colors.white,
             borderRadius: BorderRadius.circular(10),
             image: imgUrl.isNotEmpty
-            ? DecorationImage(
-              image: NetworkImage(imgUrl),
-              fit: BoxFit.cover
-            ) : null, 
-          ), 
+                ? DecorationImage(
+                    image: NetworkImage(imgUrl),
+                    fit: BoxFit.cover,
+                  )
+                : null,
+          ),
         ),
       ),
-    ); 
+    );
   }
 }
 
@@ -183,9 +169,9 @@ class BuyingOptions extends StatefulWidget {
     required this.basePrice,
     required this.onPriceChange,
     required this.monetizationRate,
-    required this.commercialRate
+    required this.commercialRate,
   });
-  
+
   final double basePrice;
   final double monetizationRate;
   final double commercialRate;
@@ -200,7 +186,7 @@ class _BuyingOptionsState extends State<BuyingOptions> {
 
   void _updatePrice() {
     double price = widget.basePrice;
-    
+
     if (_monetized) {
       price *= widget.monetizationRate;
     }
@@ -233,7 +219,7 @@ class _BuyingOptionsState extends State<BuyingOptions> {
                   Text(
                     "Personal",
                     style: GoogleFonts.poppins(
-                      fontSize: 16, 
+                      fontSize: 16,
                       fontWeight: FontWeight.w400,
                       color: Colors.white,
                     ),
@@ -243,7 +229,7 @@ class _BuyingOptionsState extends State<BuyingOptions> {
               Text(
                 "Included",
                 style: GoogleFonts.poppins(
-                  fontSize: 16, 
+                  fontSize: 16,
                   fontWeight: FontWeight.w400,
                   color: const Color(0xFFC5C2D2),
                 ),
@@ -262,8 +248,8 @@ class _BuyingOptionsState extends State<BuyingOptions> {
                     },
                     child: SvgPicture.asset(
                       _monetized
-                      ? "assets/icons/Checked.svg"
-                      : "assets/icons/Unchecked.svg",
+                          ? "assets/icons/Checked.svg"
+                          : "assets/icons/Unchecked.svg",
                       height: 25,
                       width: 25,
                     ),
@@ -272,7 +258,7 @@ class _BuyingOptionsState extends State<BuyingOptions> {
                   Text(
                     "Monetized",
                     style: GoogleFonts.poppins(
-                      fontSize: 16, 
+                      fontSize: 16,
                       fontWeight: FontWeight.w400,
                       color: Colors.white,
                     ),
@@ -282,7 +268,7 @@ class _BuyingOptionsState extends State<BuyingOptions> {
               Text(
                 "+${(widget.monetizationRate - 1) * 100}%",
                 style: GoogleFonts.poppins(
-                  fontSize: 16, 
+                  fontSize: 16,
                   fontWeight: FontWeight.w400,
                   color: const Color(0xFFC5C2D2),
                 ),
@@ -301,8 +287,8 @@ class _BuyingOptionsState extends State<BuyingOptions> {
                     },
                     child: SvgPicture.asset(
                       _commercialized
-                      ? "assets/icons/Checked.svg"
-                      : "assets/icons/Unchecked.svg",
+                          ? "assets/icons/Checked.svg"
+                          : "assets/icons/Unchecked.svg",
                       height: 25,
                       width: 25,
                     ),
@@ -311,7 +297,7 @@ class _BuyingOptionsState extends State<BuyingOptions> {
                   Text(
                     "Commercial",
                     style: GoogleFonts.poppins(
-                      fontSize: 16, 
+                      fontSize: 16,
                       fontWeight: FontWeight.w400,
                       color: Colors.white,
                     ),
@@ -319,9 +305,9 @@ class _BuyingOptionsState extends State<BuyingOptions> {
                 ],
               ),
               Text(
-                "+${((widget.commercialRate - 1)*100).toStringAsFixed(0)}%",
+                "+${((widget.commercialRate - 1) * 100).toStringAsFixed(0)}%",
                 style: GoogleFonts.poppins(
-                  fontSize: 16, 
+                  fontSize: 16,
                   fontWeight: FontWeight.w400,
                   color: const Color(0xFFC5C2D2),
                 ),
@@ -336,7 +322,7 @@ class _BuyingOptionsState extends State<BuyingOptions> {
 
 class PaymentMethods extends StatelessWidget {
   const PaymentMethods({super.key});
-  
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -344,10 +330,7 @@ class PaymentMethods extends StatelessWidget {
       margin: const EdgeInsets.only(left: 15, right: 15, top: 15, bottom: 5),
       padding: const EdgeInsets.only(left: 10, right: 10, top: 5, bottom: 10),
       decoration: BoxDecoration(
-        border: Border.all(
-          color: const Color(0xFF383843),
-          width: 2,
-        ),
+        border: Border.all(color: const Color(0xFF383843), width: 2),
         borderRadius: BorderRadius.circular(10),
       ),
       child: Column(
@@ -357,7 +340,7 @@ class PaymentMethods extends StatelessWidget {
           Text(
             "Payment Methods",
             style: GoogleFonts.poppins(
-              fontSize: 20, 
+              fontSize: 20,
               fontWeight: FontWeight.w500,
               color: Colors.white,
             ),
@@ -391,11 +374,8 @@ class PaymentMethods extends StatelessWidget {
 class ArtDetails extends StatelessWidget {
   final ArtItem item;
 
-  const ArtDetails({
-    super.key,
-    required this.item,
-  });
-  
+  const ArtDetails({super.key, required this.item});
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -403,10 +383,7 @@ class ArtDetails extends StatelessWidget {
       margin: const EdgeInsets.only(left: 15, right: 15, top: 5, bottom: 5),
       padding: const EdgeInsets.only(left: 10, right: 10, top: 5, bottom: 10),
       decoration: BoxDecoration(
-        border: Border.all(
-          color: const Color(0xFF383843),
-          width: 2,
-        ),
+        border: Border.all(color: const Color(0xFF383843), width: 2),
         borderRadius: BorderRadius.circular(10),
       ),
       child: Column(
@@ -416,7 +393,7 @@ class ArtDetails extends StatelessWidget {
           Text(
             "Details",
             style: GoogleFonts.poppins(
-              fontSize: 20, 
+              fontSize: 20,
               fontWeight: FontWeight.w500,
               color: Colors.white,
             ),
@@ -424,7 +401,7 @@ class ArtDetails extends StatelessWidget {
           Text(
             item!.details,
             style: GoogleFonts.poppins(
-              fontSize: 12, 
+              fontSize: 12,
               fontWeight: FontWeight.w300,
               color: const Color(0xFF828282),
             ),
@@ -438,11 +415,8 @@ class ArtDetails extends StatelessWidget {
 class TermsOfService extends StatelessWidget {
   final ArtItem item;
 
-  const TermsOfService({
-    super.key,
-    required this.item,
-  });
-  
+  const TermsOfService({super.key, required this.item});
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -450,10 +424,7 @@ class TermsOfService extends StatelessWidget {
       margin: const EdgeInsets.only(left: 15, right: 15, top: 5, bottom: 5),
       padding: const EdgeInsets.only(left: 10, right: 10, top: 5, bottom: 10),
       decoration: BoxDecoration(
-        border: Border.all(
-          color: const Color(0xFF383843),
-          width: 2,
-        ),
+        border: Border.all(color: const Color(0xFF383843), width: 2),
         borderRadius: BorderRadius.circular(10),
       ),
       child: Column(
@@ -463,7 +434,7 @@ class TermsOfService extends StatelessWidget {
           Text(
             "${item.artistName}'s Terms of Service",
             style: GoogleFonts.poppins(
-              fontSize: 20, 
+              fontSize: 20,
               fontWeight: FontWeight.w500,
               color: Colors.white,
             ),
@@ -471,7 +442,7 @@ class TermsOfService extends StatelessWidget {
           Text(
             item!.customToS, //change later
             style: GoogleFonts.poppins(
-              fontSize: 12, 
+              fontSize: 12,
               fontWeight: FontWeight.w300,
               color: const Color(0xFFC5C2D2),
             ),
@@ -487,7 +458,7 @@ class AcceptSection extends StatefulWidget {
     super.key,
     required this.artistName,
     required this.isTermsAccepted,
-    required this.onAccepted
+    required this.onAccepted,
   });
 
   final String artistName;
@@ -512,8 +483,8 @@ class _AcceptSectionState extends State<AcceptSection> {
                 onTap: () => widget.onAccepted(!widget.isTermsAccepted),
                 child: SvgPicture.asset(
                   widget.isTermsAccepted
-                  ? "assets/icons/Checked.svg"
-                  : "assets/icons/Unchecked.svg",
+                      ? "assets/icons/Checked.svg"
+                      : "assets/icons/Unchecked.svg",
                   height: 25,
                   width: 25,
                 ),
@@ -522,7 +493,7 @@ class _AcceptSectionState extends State<AcceptSection> {
               Text(
                 "I accept ${widget.artistName}'s Terms of Service",
                 style: GoogleFonts.poppins(
-                  fontSize: 13, 
+                  fontSize: 13,
                   fontWeight: FontWeight.w400,
                   color: Colors.white,
                 ),
@@ -534,21 +505,18 @@ class _AcceptSectionState extends State<AcceptSection> {
             children: [
               Expanded(
                 child: Container(
-                  padding: const EdgeInsets.symmetric(
-                    vertical: 10,
-                  ),
+                  padding: const EdgeInsets.symmetric(vertical: 10),
                   decoration: BoxDecoration(
-                    color: 
-                      widget.isTermsAccepted
-                      ? const Color(0xFF7A88F2)
-                      : const Color(0xFF383843),
+                    color: widget.isTermsAccepted
+                        ? const Color(0xFF7A88F2)
+                        : const Color(0xFF383843),
                     borderRadius: BorderRadius.circular(8),
                   ),
                   child: Center(
                     child: Text(
                       widget.isTermsAccepted
-                      ? "Submit request"
-                      : "Accept terms to submit a request",
+                          ? "Submit request"
+                          : "Accept terms to submit a request",
                       style: GoogleFonts.poppins(
                         fontSize: 14,
                         fontWeight: FontWeight.w500,
