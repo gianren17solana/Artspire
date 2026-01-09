@@ -4,8 +4,21 @@ import 'package:artspire/components/popular_section.dart';
 import 'package:artspire/components/service_section.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
   const HomePage({super.key});
+
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  String searchQuery = '';
+
+  void _updateSearch(String query) {
+    setState(() {
+      searchQuery = query.toLowerCase();
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -14,9 +27,9 @@ class HomePage extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           TextHeader(),
-          Searchbar(hintMsg: "Search"),
+          Searchbar(hintMsg: "Search", onChanged: _updateSearch),
           HeaderCards(),
-          ServiceSection(),
+          ServiceSection(searchQuery: searchQuery),
         ],
       ),
     );

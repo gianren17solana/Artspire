@@ -6,7 +6,9 @@ import 'package:artspire/models/artItem.dart';
 import 'package:artspire/apiService.dart';
 
 class ServiceSection extends StatefulWidget {
-  const ServiceSection({super.key});
+  const ServiceSection({super.key, this.searchQuery = ''});
+
+  final String searchQuery;
 
   @override
   State<ServiceSection> createState() => _ServiceSectionState();
@@ -19,6 +21,16 @@ class _ServiceSectionState extends State<ServiceSection> {
   void initState() {
     super.initState();
     _itemsFuture = ApiService.fetchItems();
+  }
+
+  List<ArtItem> _filterItems(List<ArtItem> items) {
+    if (widget.searchQuery.isEmpty) return items;
+    return items.where((e) {
+      return e.serviceName.toLowerCase().contains(widget.searchQuery) ||
+             e.artistName.toLowerCase().contains(widget.searchQuery) ||
+             e.description.toLowerCase().contains(widget.searchQuery) ||
+             e.category.toLowerCase().contains(widget.searchQuery);
+    }).toList();
   }
 
   @override
@@ -59,7 +71,19 @@ class _ServiceSectionState extends State<ServiceSection> {
                 );
               }
 
-              final items = snapshot.data!;
+              final items = _filterItems(snapshot.data!);
+
+              if (items.isEmpty) {
+                return Container(
+                  margin: EdgeInsets.only(top: 20),
+                  child: Center(
+                    child: Text(
+                      "No commissions found",
+                      style: GoogleFonts.poppins(color: Colors.white70),
+                    ),
+                  ),
+                );
+              }
 
               return Container(
                 margin: EdgeInsets.only(top: 10),
