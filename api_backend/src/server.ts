@@ -296,6 +296,31 @@ const currentArtist = {
   average_price: 3055,
 };
 
+// Chat messages
+const chats = [
+  {
+    id: 1,
+    username: "Emu Ootori",
+    latest_msg: "Wonderhoy~! ✨ Thank you for commissioning me! I'll make it super fun!",
+    img_url: "https://cdn.donmai.us/sample/b3/9e/__ootori_emu_project_sekai_drawn_by_xiao_sui_shi_zhi_lang__sample-b39e37460e762f9ca13f158813b875af.jpg",
+    is_requested: false,
+  },
+  {
+    id: 2,
+    username: "Rui Kamishiro",
+    latest_msg: "Interesting request! I have a few ideas that might blow your mind 🎭",
+    img_url: "https://cdn.donmai.us/sample/9f/37/__kamishiro_rui_project_sekai_drawn_by_xiao_sui_shi_zhi_lang__sample-9f377dae8f42c4ecec700fa02c2ddfa7.jpg",
+    is_requested: false,
+  },
+  {
+    id: 3,
+    username: "Huzurina",
+    latest_msg: "Hi! I'd love to work on your VTuber model. When can we discuss details?",
+    img_url: "https://cdn.donmai.us/sample/f6/85/__original_drawn_by_huzurina_suruba__sample-f6857df0b2793c18671d646b580b0f14.jpg",
+    is_requested: true,
+  },
+];
+
 const server = express();
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY || "");
 
@@ -361,6 +386,15 @@ export const processPayment = async (req: Request, res: Response) => {
 export const getArtist = async (req: Request, res: Response) => {
   try {
     res.status(200).json(currentArtist);
+  } catch (err) {
+    console.error("err:", err);
+    res.status(500).json({ message: 'Internal Server Error' });
+  }
+}
+
+export const getChats = async (req: Request, res: Response) => {
+  try {
+    res.status(200).json(chats);
   } catch (err) {
     console.error("err:", err);
     res.status(500).json({ message: 'Internal Server Error' });

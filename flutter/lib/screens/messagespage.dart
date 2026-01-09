@@ -4,6 +4,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:artspire/widgets/searcbar.dart';
 import 'package:artspire/models/chatItem.dart';
 import 'package:artspire/components/chat_section.dart';
+import 'package:artspire/apiService.dart';
 
 class MessagesPage extends StatefulWidget {
   const MessagesPage({super.key});
@@ -14,35 +15,21 @@ class MessagesPage extends StatefulWidget {
 
 class _MessagePageState extends State<MessagesPage> {
   int selectedIndex = 0;
+  late Future<List<ChatItem>> _chatsFuture;
+
+  @override
+  void initState() {
+    super.initState();
+    _chatsFuture = ApiService.fetchChats();
+  }
+
   void _updateCategory(index) {
     setState(() {
       selectedIndex = index;
     });
   }
 
-  //mock data
-  final List<ChatItem> chats = [
-    ChatItem(
-      username: "梅原生（せい）",
-      latestMsg: "Hii, thank you so much!🩵 Enjoy your holiday <<<<<))))",
-      imgPath: "assets/img/Chatpf.png",
-      isRequested: false,
-    ),
-    ChatItem(
-      username: "さえ[saemidesu]",
-      latestMsg: "Appreciate your request, I'll try my best working on this!",
-      imgPath: "assets/img/saemi.png",
-      isRequested: false,
-    ),
-    ChatItem(
-      username: "somna",
-      latestMsg: "Can you make this animation? Thank you",
-      imgPath: "assets/img/somna.png",
-      isRequested: true,
-    ),
-  ];
-
-  List<ChatItem> filteredItems() {
+  List<ChatItem> filteredItems(List<ChatItem> chats) {
     if (selectedIndex == 0)
       return chats;
     else
@@ -53,13 +40,33 @@ class _MessagePageState extends State<MessagesPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color(0xFF21212E),
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          MessageHeader(),
-          ChatType(selectedIndex: selectedIndex, onSelected: _updateCategory),
-          ChatTree(chats: filteredItems()),
-        ],
+      body: FutureBuilder<List<ChatItem>>(
+        future: _chatsFuture,
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const Center(child: CircularProgressIndicator());
+          }
+
+          if (snapshot.hasError) {
+            return Center(
+              child: Text(
+                "Failed to load messages",
+                style: GoogleFonts.poppins(color: Colors.white70),
+              ),
+            );
+          }
+
+          final chats = snapshot.data!;
+
+          return Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              MessageHeader(),
+              ChatType(selectedIndex: selectedIndex, onSelected: _updateCategory),
+              ChatTree(chats: filteredItems(chats)),
+            ],
+          );
+        },
       ),
     );
   }

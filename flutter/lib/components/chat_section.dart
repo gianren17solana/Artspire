@@ -24,7 +24,7 @@ class ChatTree extends StatelessWidget {
               children: [
                 CircleAvatar(
                   radius: 28,
-                  backgroundImage: AssetImage(chats[index].imgPath),
+                  backgroundImage: NetworkImage(chats[index].imgUrl),
                 ),
 
                 const SizedBox(width: 20),

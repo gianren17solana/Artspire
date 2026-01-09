@@ -1,5 +1,6 @@
 import 'package:artspire/models/artItem.dart';
 import 'package:artspire/models/artist.dart';
+import 'package:artspire/models/chatItem.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 
@@ -48,6 +49,22 @@ class ApiService {
         return Artist.fromJson(data);
       } else {
         throw Exception('Failed to load artist: ${response.statusCode}');
+      }
+    } catch (e) {
+      print("API Error: $e");
+      rethrow;
+    }
+  }
+
+  static Future<List<ChatItem>> fetchChats() async {
+    try {
+      final response = await http.get(Uri.parse('$baseUrl/fetchChats'));
+
+      if (response.statusCode == 200) {
+        final List data = jsonDecode(response.body);
+        return data.map((e) => ChatItem.fromJson(e)).toList();
+      } else {
+        throw Exception('Failed to load chats: ${response.statusCode}');
       }
     } catch (e) {
       print("API Error: $e");
