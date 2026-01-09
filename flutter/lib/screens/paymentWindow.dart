@@ -3,46 +3,38 @@ import "package:flutter_stripe/flutter_stripe.dart";
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
-class PaymentWindow extends StatelessWidget {
-  const PaymentWindow({super.key});
-
-  dynamic createPaymentIntent(String amount, String currency) async {
+class PaymentService {
+  static Future<Map<String, dynamic>?> createPaymentIntent(String amount, String currency) async {
     try {
       final body = {
-      'amount': amount,
-      'currency': currency,
+        'amount': amount,
+        'currency': currency,
       };
 
       final response = await http.post(
-        Uri.parse('http://192.168.254.111:3000/api/payment'),
+        Uri.parse('https://artspire-seven.vercel.app/api/payment'),
         body: body,
-        headers: {'Content-Type': 'application/x-www-form-urlencoded'});
+        headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+      );
       return jsonDecode(response.body);
     } catch (err) {
       print(err);
+      return null;
     }
   }
 
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Payment'),
-      ),
-      body: Center(
-        child: ElevatedButton(
-          child: const Text('Pay ₱1000'),
-          onPressed: () {
-            makePayment(context);
-          },
-        ),
-      ),
-    );
-  }
-
-  Future<void> makePayment(BuildContext context) async {
+  static Future<void> makePayment(BuildContext context, double amount) async {
     try {
-      final paymentIntentData = await createPaymentIntent('100000', 'PHP') ?? {};
+      // Convert amount to cents (Stripe expects smallest currency unit)
+      final amountInCents = (amount * 100).toInt().toString();
+      final paymentIntentData = await createPaymentIntent(amountInCents, 'PHP');
+      
+      if (paymentIntentData == null || paymentIntentData['client_secret'] == null) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text("Failed to create payment intent")),
+        );
+        return;
+      }
 
       await Stripe.instance.initPaymentSheet(
         paymentSheetParameters: SetupPaymentSheetParameters(
@@ -51,25 +43,28 @@ class PaymentWindow extends StatelessWidget {
           customFlow: false,
           merchantDisplayName: 'Artspire',
         ),
-      ).then((value) {
-        displayPaymentSheet(context);
-      });
+      );
+      
+      await displayPaymentSheet(context);
     } catch (e) {
       print(e);
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text("Payment error: $e")),
+      );
     }
   }
 
-  void displayPaymentSheet(BuildContext context) async {
+  static Future<void> displayPaymentSheet(BuildContext context) async {
     try {
-      await Stripe.instance.presentPaymentSheet().then((value) {
-        ScaffoldMessenger.of(context)
-          .showSnackBar(const SnackBar(content: Text("Paid succesfully!")));
-      }).onError((err, stack) {
-        throw Exception(err);
-      });
+      await Stripe.instance.presentPaymentSheet();
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text("Paid successfully!")),
+      );
     } on StripeException catch (e) {
-      print("err: $e");
+      print("Stripe error: $e");
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text("Payment cancelled")),
+      );
     }
   }
-
 }
