@@ -1,4 +1,4 @@
-import server, { getItems, getItemById, processPayment } from "./server"
+import server, { getItems, getItemById, processPayment, getArtist } from "./server"
 import express from 'express';
 import cors from 'cors';
 import { Router } from 'express';
@@ -8,6 +8,7 @@ const port = parseInt(process.env.PORT || '3000', 10);
 
 router.get("/fetchItem/:id", getItemById);
 router.get('/fetchItem', getItems);
+router.get('/fetchArtist', getArtist);
 router.post('/api/payment', processPayment);
 
 server.use(cors()); //TODO: remove in production, only for testing

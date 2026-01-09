@@ -1,4 +1,5 @@
 import 'package:artspire/models/artItem.dart';
+import 'package:artspire/models/artist.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 
@@ -35,6 +36,22 @@ class ApiService {
      return ArtItem.fromJson(data);
     } else {
      throw Exception('Failed to load item with id $id');
+    }
+  }
+
+  static Future<Artist> fetchArtist() async {
+    try {
+      final response = await http.get(Uri.parse('$baseUrl/fetchArtist'));
+
+      if (response.statusCode == 200) {
+        final data = jsonDecode(response.body);
+        return Artist.fromJson(data);
+      } else {
+        throw Exception('Failed to load artist: ${response.statusCode}');
+      }
+    } catch (e) {
+      print("API Error: $e");
+      rethrow;
     }
   }
 }

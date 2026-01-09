@@ -284,6 +284,18 @@ const item: ArtItemWithArtist[] = [
 // Sort items by rating (highest first)
 item.sort((a, b) => b.avgRating - a.avgRating);
 
+// Current user artist profile
+const currentArtist = {
+  id: 1,
+  username: "梅原生（せい）",
+  bio: "My name is Sei.\nThank you for your comments and likes!\n※ AI-related uses are prohibited!\n※ Using my images with AI-related content is prohibited",
+  pfp_url: "https://cdn.donmai.us/original/dc/fe/dcfe825ea857757a414aec1910c7f0b1.jpg",
+  custom_tos: "Personal use only. No AI training or generation allowed.",
+  arts_count: 66,
+  sold_count: 33,
+  average_price: 3055,
+};
+
 const server = express();
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY || "");
 
@@ -343,6 +355,15 @@ export const processPayment = async (req: Request, res: Response) => {
   } catch (err: any) {
     console.log('err: ' + err.message);
     return res.status(500).json({ error: err.message })
+  }
+}
+
+export const getArtist = async (req: Request, res: Response) => {
+  try {
+    res.status(200).json(currentArtist);
+  } catch (err) {
+    console.error("err:", err);
+    res.status(500).json({ message: 'Internal Server Error' });
   }
 }
 

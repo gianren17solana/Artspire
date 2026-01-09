@@ -1,30 +1,62 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:go_router/go_router.dart';
+import 'package:intl/intl.dart';
+import 'package:artspire/models/artist.dart';
+import 'package:artspire/apiService.dart';
 
-class ProfilePage extends StatelessWidget {
+class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});
+
+  @override
+  State<ProfilePage> createState() => _ProfilePageState();
+}
+
+class _ProfilePageState extends State<ProfilePage> {
+  late Future<Artist> _artistFuture;
+
+  @override
+  void initState() {
+    super.initState();
+    _artistFuture = ApiService.fetchArtist();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color(0xFF21212E),
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: const [
-          ProfileHeader(),
-          UserProfile(),
-          UserDescription(
-            name: "梅原生（せい）",
-            description:
-                "My name is Sei.\n"
-                "Thank you for your comments and likes!\n"
-                "※ AI-related uses are prohibited!\n"
-                "※ Using my images with AI-related content is prohibited\n",
-          ),
-          ArtType(),
-          Expanded(child: ArtContainer()),
-        ],
+      body: FutureBuilder<Artist>(
+        future: _artistFuture,
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const Center(child: CircularProgressIndicator());
+          }
+
+          if (snapshot.hasError) {
+            return Center(
+              child: Text(
+                "Failed to load profile",
+                style: GoogleFonts.poppins(color: Colors.white70),
+              ),
+            );
+          }
+
+          final artist = snapshot.data!;
+
+          return Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const ProfileHeader(),
+              UserProfile(artist: artist),
+              UserDescription(
+                name: artist.username,
+                description: artist.bio,
+              ),
+              const ArtType(),
+              const Expanded(child: ArtContainer()),
+            ],
+          );
+        },
       ),
     );
   }
@@ -48,7 +80,15 @@ class ProfileHeader extends StatelessWidget {
 }
 
 class UserProfile extends StatelessWidget {
-  const UserProfile({super.key});
+  const UserProfile({super.key, required this.artist});
+
+  final Artist artist;
+
+  static final _formatter = NumberFormat.currency(
+    locale: 'en_PH',
+    symbol: '₱',
+    decimalDigits: 0,
+  );
 
   @override
   Widget build(BuildContext context) {
@@ -60,7 +100,9 @@ class UserProfile extends StatelessWidget {
         children: [
           CircleAvatar(
             radius: 50,
-            backgroundImage: AssetImage("assets/img/Chatpf.png"),
+            backgroundImage: artist.pfpUrl.isNotEmpty
+                ? NetworkImage(artist.pfpUrl)
+                : const AssetImage("assets/img/Chatpf.png") as ImageProvider,
           ),
           const SizedBox(width: 18),
 
@@ -70,12 +112,10 @@ class UserProfile extends StatelessWidget {
               children: [
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: const [
-                    _InfoBlock(value: '66', title: 'Arts'),
-
-                    _InfoBlock(value: '33', title: 'Sold'),
-
-                    _InfoBlock(value: '₱3,055', title: 'Average price'),
+                  children: [
+                    _InfoBlock(value: '${artist.artsCount}', title: 'Arts'),
+                    _InfoBlock(value: '${artist.soldCount}', title: 'Sold'),
+                    _InfoBlock(value: _formatter.format(artist.averagePrice), title: 'Average price'),
                   ],
                 ),
 
