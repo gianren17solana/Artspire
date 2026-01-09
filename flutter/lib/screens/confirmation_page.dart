@@ -269,7 +269,7 @@ class _BuyingOptionsState extends State<BuyingOptions> {
                 ],
               ),
               Text(
-                "+${(widget.monetizationRate - 1) * 100}%",
+                "+${((widget.monetizationRate - 1) * 100).toStringAsFixed(0)}%",
                 style: GoogleFonts.poppins(
                   fontSize: 16,
                   fontWeight: FontWeight.w400,

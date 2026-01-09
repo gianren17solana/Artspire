@@ -15,7 +15,7 @@ class HomePage extends StatelessWidget {
         children: [
           TextHeader(),
           Searchbar(hintMsg: "Search"),
-          PopularSection(),
+          HeaderCards(),
           ServiceSection(),
         ],
       ),

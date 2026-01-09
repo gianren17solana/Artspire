@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:artspire/widgets/pop_card.dart';
 
-class PopularSection extends StatelessWidget {
-  const PopularSection({super.key});
+class HeaderCards extends StatelessWidget {
+  const HeaderCards({super.key});
 
   //mock data declaration for layout testing
   static const List<String> tags = [
