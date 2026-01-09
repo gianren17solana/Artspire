@@ -14,6 +14,7 @@ class SearchPage extends StatefulWidget {
 
 class _SearchPageState extends State<SearchPage> {
   int selectedIndex = 0;
+  String searchQuery = '';
 
   late Future<List<ArtItem>> _itemsFuture;
 
@@ -26,6 +27,12 @@ class _SearchPageState extends State<SearchPage> {
   void _updateCategory(index) {
     setState(() {
       selectedIndex = index;
+    });
+  }
+
+  void _updateSearch(String query) {
+    setState(() {
+      searchQuery = query.toLowerCase();
     });
   }
 
@@ -46,23 +53,38 @@ class _SearchPageState extends State<SearchPage> {
         final items = snapshot.data!;
 
         List<ArtItem> filteredItems() {
-          if (selectedIndex == 0) return items;
-          const categoryTabs = [
-            "Illustration",
-            "Animation",
-            "Emotes",
-            "Rating",
-          ];
-          return items
-              .where((e) => e.category == categoryTabs[selectedIndex - 1])
-              .toList();
+          var result = items;
+          
+          // Filter by category
+          if (selectedIndex != 0) {
+            const categoryTabs = [
+              "Illustration",
+              "Animation",
+              "Emotes",
+              "Rating",
+            ];
+            result = result
+                .where((e) => e.category == categoryTabs[selectedIndex - 1])
+                .toList();
+          }
+          
+          // Filter by search query
+          if (searchQuery.isNotEmpty) {
+            result = result.where((e) {
+              return e.serviceName.toLowerCase().contains(searchQuery) ||
+                     e.artistName.toLowerCase().contains(searchQuery) ||
+                     e.description.toLowerCase().contains(searchQuery);
+            }).toList();
+          }
+          
+          return result;
         }
 
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             PageHeader(),
-            Searchbar(hintMsg: "Search"),
+            Searchbar(hintMsg: "Search", onChanged: _updateSearch),
             CategoryTab(
               selectedIndex: selectedIndex,
               onSelected: _updateCategory,

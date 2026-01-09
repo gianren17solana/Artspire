@@ -4,10 +4,12 @@ import 'package:google_fonts/google_fonts.dart';
 
 class Searchbar extends StatelessWidget {
   final String hintMsg;
+  final void Function(String)? onChanged;
 
   const Searchbar({
     super.key,
-    required this.hintMsg
+    required this.hintMsg,
+    this.onChanged,
   });
 
 
@@ -16,6 +18,7 @@ class Searchbar extends StatelessWidget {
     return Container(
       margin: EdgeInsets.only(top: 25, right: 20, left: 20),
       child: SearchBar(
+        onChanged: onChanged,
         leading: SvgPicture.asset(
           "assets/icons/Search.svg",
           height: 22,
